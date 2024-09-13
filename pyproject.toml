@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "todo-list"
+version = "0.1.0"
+description = ""
+authors = ["diego-insaurralde <diego_insaurralde@live.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.114.1"}
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-cov = "^5.0.0"
+ruff = "^0.6.4"
+taskipy = "^1.13.0"
+
+
+[tool.poetry.group.doc.dependencies]
+mkdocs-material = "^9.5.34"
+mkdocstrings = "^0.26.1"
+mkdocstrings-python = "^1.11.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "-p no:warnings"
+
+[tool.ruff]
+extend-exclude = ["migrations"]
+line-length = 79
+
+[tool.ruff.lint]
+preview = true
+select = ["I", "F", "E", "W", "PL", "PT"]
+
+[tool.ruff.format]
+preview = true
+quote-style= "single"
+
+[tool.taskipy.tasks]
+docs = "mkdocs serve"
+lint = "ruff check .; ruff check . --diff"
+format = "ruff check . --fix; ruff format ."
+run = "fastapi dev main.py"
+pre_test = "task lint"
+test = "pytest -s -x  --cov=todo_list -vv"
+post_test = "coverage html"
