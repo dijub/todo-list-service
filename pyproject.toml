@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = {extras = ["standard"], version = "^0.114.1"}
+pydantic = {extras = ["email"], version = "^2.9.1"}
 
 
 [tool.poetry.group.dev.dependencies]
@@ -46,7 +47,7 @@ quote-style= "single"
 docs = "mkdocs serve"
 lint = "ruff check .; ruff check . --diff"
 format = "ruff check . --fix; ruff format ."
-run = "fastapi dev main.py"
+run = "fastapi dev todo_list/main.py"
 pre_test = "task lint"
 test = "pytest -s -x  --cov=todo_list -vv"
 post_test = "coverage html"
